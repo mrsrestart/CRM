@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Exports\bookExport;
+use App\Exports\CourseExport;
 use App\Exports\CustomerExport;
 
 use App\Models\Book;
@@ -35,7 +36,11 @@ class reportController extends Controller
         $allCourse = Course::all();
         return view('report.reportCourseRegister')->with('allCourse' , $allCourse);
     }
-
+    public function reportCourseRegister(Request $request)
+    {
+        $courseId = (int)$request->courseId;
+        return Excel::download(new CourseExport($courseId), 'Course.xlsx');
+    }
     public function reportBookBuyEx(Request $request)
     {
         $bookName = $request->bookName;
@@ -43,14 +48,14 @@ class reportController extends Controller
 
 
     }
-    public function reportCourse(Request $request)
-    {
-        $courseId = $request->course_id;
-        $allCustomer = DB::table('customers')
-            ->join('user_courses', 'customers.id', '=', 'user_courses.customer_id')
-            ->where('user_courses.course_id' , '=' , $courseId)
-            ->select('customers.*','user_courses.*')
-            ->get();
-        return Excel::download(new bookExport($allCustomer), 'CustomersCourse.xlsx');
-    }
+//    public function reportCourse(Request $request)
+//    {
+//        $courseId = $request->course_id;
+//        $allCustomer = DB::table('customers')
+//            ->join('user_courses', 'customers.id', '=', 'user_courses.customer_id')
+//            ->where('user_courses.course_id' , '=' , $courseId)
+//            ->select('customers.*','user_courses.*')
+//            ->get();
+//        return Excel::download(new bookExport($allCustomer), 'CustomersCourse.xlsx');
+//    }
 }

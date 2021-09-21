@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{url('/reportCourseBuy')}}" method="post">
+    <form action="{{url('/reportCourseRegister')}}" method="post">
         @csrf
         <div class="col-md-12">
-            <select name="courseName" id="courseName" class="form-control">
-                @foreach($allBook as $item)
-                    <option value="{{ $item->bookName }}">{{ $item->bookName }}</option>
+            <select name="courseId" id="courseId" class="form-control">
+                @foreach($allCourse as $item)
+                    <option value="{{ $item->id }}">{{ $item->courseName }}</option>
                 @endforeach
             </select>
         </div>
