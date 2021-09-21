@@ -68,9 +68,11 @@
                     <td>
                         @if($item->selectedBook != "")
                             @php $selectedBooks = unserialize($item->selectedBook) @endphp
-                            @foreach($selectedBooks as $itemBooks)
-                                <p class="alert alert-info">{{ $itemBooks }}</p>
-                            @endforeach
+                            @if($selectedBooks)
+                                @foreach($selectedBooks as $itemBooks)
+                                    <p class="alert alert-info">{{ $itemBooks }}</p>
+                                @endforeach
+                            @endif
                         @else
                             <p>No Book</p>
                         @endif
@@ -84,8 +86,17 @@
                     <td>{{ $item->needFollow }}</td>
                     <td title="{{ $item->comment }}">@if($item->comment !="") Hold @else No Comment @endif</td>
                     <td>{{ $item->created_at }}</td>
-                    <td><a href="{{url('/deleteCustomer/'.$item->customersId)}}" class="btn btn-danger">Delete</a></td>
-                    <td><a href="{{url('/editCustomer/'.$item->customersId)}}" class="btn btn-info">Edit</a></td>
+                    @if(isset($item->customersId))
+                        <td><a href="{{url('/deleteCustomer/'.$item->customersId)}}" class="btn btn-danger">Delete</a></td>
+                    @else
+                        <td><a href="{{url('/deleteCustomer/'.$item->id)}}" class="btn btn-danger">Delete</a></td>
+                    @endif
+
+                    @if(isset($item->customersId))
+                        <td><a href="{{url('/editCustomer/'.$item->customersId)}}" class="btn btn-info">Edit</a></td>
+                    @else
+                        <td><a href="{{url('/editCustomer/'.$item->id)}}" class="btn btn-info">Edit</a></td>
+                    @endif
                 </tr>
                 @php
                     $a = $a + 1;

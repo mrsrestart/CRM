@@ -24,7 +24,7 @@ class customerController extends Controller
         if ($search) {
             $allCustomer = Customer::where('phone', 'like', '%'.$search.'%')
                 ->orderBy('created_at')
-                ->paginate(20);
+                ->paginate(200);
             return view('customer.allCustomer')->with([
                 'allCustomer'=> $allCustomer,
                 'course' => $course,
@@ -43,7 +43,7 @@ class customerController extends Controller
                 'course' => $course,
             ]);
         }
-        $allCustomer = Customer::sortable()->orderBy('created_at','DESC')->simplePaginate(10);
+        $allCustomer = Customer::sortable()->orderBy('created_at','DESC')->simplePaginate(1000);
         return view('customer.allCustomer')->with([
             'allCustomer'=> $allCustomer,
             'course' => $course,
